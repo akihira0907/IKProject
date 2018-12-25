@@ -17,15 +17,32 @@ public class LookAtController : MonoBehaviour {
   void Update () {
     timeElapsed += Time.deltaTime;
     // Debug.Log(timeElapsed);
-    if (timeElapsed >= 5) { // 一定時間経過で処理開始
-      targetPos = new Vector3(1.0f, 1.0f, 0.5f);
+
+    if (timeElapsed >= 1) { // 一定時間経過で処理開始
+      // targetPos = new Vector3(20f, 20f, 50f);
+
       float [] coordinates = ReadCSV(); // CSVから読み込み
-      // x, y座標を正規化
-      float x = coordinates[0] / 640;
-      float y = coordinates[1] / 480;
-      Debug.Log(x);
-      Debug.Log(y);
-      // Debug.Log("Time passed");
+      
+      if (coordinates != null) { // CSVが空じゃなければ処理
+        // x, y座標を正規化
+        float x = coordinates[0] / 640;
+        float y = coordinates[1] / 480;
+        // Debug.Log(x);
+        // Debug.Log(y);
+        // Debug.Log("Time passed");
+
+        // x, y座標をUnityの座標に変換
+        float x_unity = 0.5f - x;
+        float y_unity = 1.0f - y;
+        x_unity *= 20f;
+        y_unity *= 20f;
+        Debug.Log(x_unity);
+        Debug.Log(y_unity);
+
+        // 向いてもらう
+        targetPos = new Vector3(x_unity, y_unity, 50f);
+      }
+
       timeElapsed = 0.0f;
     }
     // targetPos = new Vector3(1.0f, 1.0f, 0.5f);
