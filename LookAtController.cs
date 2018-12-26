@@ -23,6 +23,7 @@ public class LookAtController : MonoBehaviour {
     timeElapsed += Time.deltaTime; 
     noChangeTime += Time.deltaTime;
     // Debug.Log(timeElapsed);
+    // Debug.Log(noChangeTime);
 
     if (timeElapsed >= 1) { // 一定時間経過で処理開始
       // Debug.Log("Time passed");
@@ -38,11 +39,14 @@ public class LookAtController : MonoBehaviour {
         // x, y座標を直前のものと比較, 時間の更新
         if (x != last_x || y != last_y) {
           isChange = true;
+          Debug.Log("changed!");
         } else {
           isChange = false;
+          Debug.Log("unchanged!");
         }
         if (isChange == true) {
           noChangeTime = 0.0f;
+          Debug.Log("noChangeTime Reset");
         }
 
         // 直前の座標を更新
@@ -59,13 +63,13 @@ public class LookAtController : MonoBehaviour {
           float y_unity = 1.0f - y;
           x_unity *= 20f;
           y_unity *= 20f;
-          Debug.Log(x_unity);
-          Debug.Log(y_unity);
+          // Debug.Log(x_unity);
+          // Debug.Log(y_unity);
 
           // 視線を座標の方向へ向いてもらう
           targetPos = new Vector3(x_unity, y_unity, 50f);
-          //向いてもらったら変化してない時間をリセット
-          noChangeTime = 0.0f;
+          // 向いてもらったら変化してない時間をリセット
+          // noChangeTime = 0.0f;
         }
       }
       timeElapsed = 0.0f; // 経過時間をリセット
