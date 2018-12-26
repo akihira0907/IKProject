@@ -31,22 +31,24 @@ public class LookAtController : MonoBehaviour {
       
       if (coordinates != null) { // CSVが空じゃなければ処理
         // x, y座標を正規化
+        Debug.Log(string.Format("coordinate_x:{0}", coordinates[0]));
+        Debug.Log(string.Format("coordinate_y:{0}", coordinates[1]));
         float x = coordinates[0] / 640;
         float y = coordinates[1] / 480;
-        // Debug.Log(x);
-        // Debug.Log(y);
+        Debug.Log(string.Format("x:{0}", x));
+        Debug.Log(string.Format("y:{0}", y));
 
         // x, y座標を直前のものと比較, 時間の更新
         if (x != last_x || y != last_y) {
           isChange = true;
-          Debug.Log("changed!");
+          // Debug.Log("changed!");
         } else {
           isChange = false;
-          Debug.Log("unchanged!");
+          // Debug.Log("unchanged!");
         }
         if (isChange == true) {
           noChangeTime = 0.0f;
-          Debug.Log("noChangeTime Reset");
+          // Debug.Log("noChangeTime Reset");
         }
 
         // 直前の座標を更新
@@ -61,15 +63,16 @@ public class LookAtController : MonoBehaviour {
           // x, y座標をUnityの座標に変換
           float x_unity = 0.5f - x;
           float y_unity = 1.0f - y;
-          x_unity *= 20f;
-          y_unity *= 20f;
-          // Debug.Log(x_unity);
-          // Debug.Log(y_unity);
+          Debug.Log(string.Format("x_unity:{0}", x_unity));
+          Debug.Log(string.Format("y_unity:{0}", y_unity));
+          x_unity *= 24f;
+          y_unity *= 18f;
+          y_unity -= 1.5f; // 下駄を履かせる（仮処理）
+          Debug.Log(string.Format("x_unity:{0}", x_unity));
+          Debug.Log(string.Format("y_unity:{0}", y_unity));
 
           // 視線を座標の方向へ向いてもらう
           targetPos = new Vector3(x_unity, y_unity, 50f);
-          // 向いてもらったら変化してない時間をリセット
-          // noChangeTime = 0.0f;
         }
       }
       timeElapsed = 0.0f; // 経過時間をリセット
@@ -78,7 +81,7 @@ public class LookAtController : MonoBehaviour {
 
   private void OnAnimatorIK(int layerIndex)
   {
-    this.animator.SetLookAtWeight(1.0f, 0.8f, 1.0f, 0.1f, 0f);
+    this.animator.SetLookAtWeight(1.0f, 0.4f, 1.0f, 0.3f, 0f);
     this.animator.SetLookAtPosition(this.targetPos);
   }
 
@@ -93,7 +96,7 @@ public class LookAtController : MonoBehaviour {
           string[] values = line.Split(','); // カンマで区切ってリスト化
           // Debug.Log("2");
           // Debug.Log(values[0]);
-          float[] val_int = {float.Parse(values[0]), float.Parse(values[0])}; // Stringをintに変換
+          float[] val_int = {float.Parse(values[0]), float.Parse(values[1])}; // Stringをintに変換
           // Debug.Log("3");
           return val_int;
         }
