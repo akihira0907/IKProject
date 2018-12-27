@@ -12,10 +12,10 @@ public class LookAtController : MonoBehaviour {
   private float last_x = 99.9f; // 直前の座標
   private float last_y = 99.9f; // 直前の座標
   private bool isChange = false; // 直前の座標から変化しているか
-  [SerializeField] float x_coefficient = 24.0f; // xの係数
-  [SerializeField] float y_coefficient = 18.0f; // yの係数
-  [SerializeField] float y_geta = -1.50f; // yの下駄
-  [SerializeField] float z_pos = 50.0f; // zの固定ポジション 
+  [SerializeField] private float x_coefficient = 24.0f; // xの係数
+  [SerializeField] private float y_coefficient = 18.0f; // yの係数
+  [SerializeField] private float y_geta = -1.50f; // yの下駄
+  [SerializeField] private float z_pos = 50.0f; // zの固定ポジション 
 
   void Start () {
     this.animator = GetComponent<Animator> (); 
