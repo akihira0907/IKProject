@@ -12,6 +12,10 @@ public class LookAtController : MonoBehaviour {
   private float last_x = 99.9f; // 直前の座標
   private float last_y = 99.9f; // 直前の座標
   private bool isChange = false; // 直前の座標から変化しているか
+  private float x_coefficient = 24.0f; // xの係数
+  private float y_coefficient = 18.0f; // yの係数
+  private float y_geta = -1.5f; // yの下駄
+  private float z_pos = 50.0f; // zの座標
 
   void Start () {
     this.animator = GetComponent<Animator> (); 
@@ -65,14 +69,14 @@ public class LookAtController : MonoBehaviour {
           float y_unity = 1.0f - y;
           Debug.Log(string.Format("x_unity:{0}", x_unity));
           Debug.Log(string.Format("y_unity:{0}", y_unity));
-          x_unity *= 24f;
-          y_unity *= 18f;
-          y_unity -= 1.5f; // 下駄を履かせる（仮処理）
+          x_unity *= x_coefficient;
+          y_unity *= y_coefficient;
+          y_unity += y_geta; // 下駄を履かせる（仮処理）
           Debug.Log(string.Format("x_unity:{0}", x_unity));
           Debug.Log(string.Format("y_unity:{0}", y_unity));
 
           // 視線を座標の方向へ向いてもらう
-          targetPos = new Vector3(x_unity, y_unity, 50f);
+          targetPos = new Vector3(x_unity, y_unity, z_pos);
         }
       }
       timeElapsed = 0.0f; // 経過時間をリセット
