@@ -59,7 +59,7 @@ public class LookAtController : MonoBehaviour {
         last_x = x;
         last_y = y;
 
-        if (noChangeTime >= 5) {
+        if (noChangeTime >= 3) {
           // 座標が変化していない時間が一定以上なら視線をカメラに向かせる
           targetPos = Camera.main.transform.position;
           targetPos.z = z_pos;
