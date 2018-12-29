@@ -12,10 +12,10 @@ public class LookAtController : MonoBehaviour {
   private float last_x = 99.9f; // 直前の座標
   private float last_y = 99.9f; // 直前の座標
   private bool isChange = false; // 直前の座標から変化しているか
-  private float x_coefficient = 24.0f; // xの係数
-  private float y_coefficient = 18.0f; // yの係数
-  private float y_geta = -1.5f; // yの下駄
-  private float z_pos = 50.0f; // zの座標
+  [SerializeField] private float x_coefficient = 24.0f; // xの係数
+  [SerializeField] private float y_coefficient = 18.0f; // yの係数
+  [SerializeField] private float y_geta = 1.0f; // yの下駄
+  [SerializeField] private float z_pos = 50.0f; // zの座標
 
   void Start () {
     this.animator = GetComponent<Animator> (); 
@@ -39,8 +39,8 @@ public class LookAtController : MonoBehaviour {
         Debug.Log(string.Format("coordinate_y:{0}", coordinates[1]));
         float x = coordinates[0] / 640;
         float y = coordinates[1] / 480;
-        Debug.Log(string.Format("x:{0}", x));
-        Debug.Log(string.Format("y:{0}", y));
+        // Debug.Log(string.Format("x:{0}", x));
+        // Debug.Log(string.Format("y:{0}", y));
 
         // x, y座標を直前のものと比較, 時間の更新
         if (x != last_x || y != last_y) {
@@ -62,21 +62,24 @@ public class LookAtController : MonoBehaviour {
         if (noChangeTime >= 5) {
           // 座標が変化していない時間が一定以上なら視線をカメラに向かせる
           targetPos = Camera.main.transform.position;
+          targetPos.z = z_pos;
+          Debug.Log(string.Format("Camera Pos:{0}", targetPos));
 
         } else {
           // x, y座標をUnityの座標に変換
           float x_unity = 0.5f - x;
-          float y_unity = 1.0f - y;
-          Debug.Log(string.Format("x_unity:{0}", x_unity));
-          Debug.Log(string.Format("y_unity:{0}", y_unity));
+          float y_unity = 0.5f - y;
+          // Debug.Log(string.Format("x_unity:{0}", x_unity));
+          // Debug.Log(string.Format("y_unity:{0}", y_unity));
           x_unity *= x_coefficient;
           y_unity *= y_coefficient;
           y_unity += y_geta; // 下駄を履かせる（仮処理）
-          Debug.Log(string.Format("x_unity:{0}", x_unity));
-          Debug.Log(string.Format("y_unity:{0}", y_unity));
+          // Debug.Log(string.Format("x_unity:{0}", x_unity));
+          // Debug.Log(string.Format("y_unity:{0}", y_unity));
 
           // 視線を座標の方向へ向いてもらう
           targetPos = new Vector3(x_unity, y_unity, z_pos);
+          Debug.Log(string.Format("LookAt Pos:{0}", targetPos));
         }
       }
       timeElapsed = 0.0f; // 経過時間をリセット
